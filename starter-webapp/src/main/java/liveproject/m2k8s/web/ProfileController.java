@@ -37,7 +37,7 @@ public class ProfileController {
 
     @PostMapping
     public Profile saveProfile(
-            @RequestBody Profile profile) {
+            @Valid @RequestBody Profile profile) {
 
         return profileService.save(profile);
     }
@@ -50,7 +50,7 @@ public class ProfileController {
 
     @PutMapping(value = "/{username}")
     @Transactional
-    public Profile updateProfile(@PathVariable String username, @RequestBody Profile profile) {
+    public Profile updateProfile(@PathVariable String username, @Valid @RequestBody Profile profile) {
         if (!username.equals(profile.getUsername())) {
             throw new RuntimeException("Cannot change username for Profile");
         }

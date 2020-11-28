@@ -1,37 +1,38 @@
-[bravo@localhost tmp]$ http POST localhost:8080/profile username=unamerkel2 password=changeme \
+[bravo@localhost tmp]$ http POST localhost:8080/profile username=unamerkel password=changeme \
 >     firstName=Una lastName=Merkel email=unamerkel@example.com   ### create new profile
+
 HTTP/1.1 200
 Connection: keep-alive
 Content-Type: application/json
-Date: Sat, 28 Nov 2020 18:56:35 GMT
+Date: Sat, 28 Nov 2020 19:15:48 GMT
 Keep-Alive: timeout=60
 Transfer-Encoding: chunked
 
 {
     "email": "unamerkel@example.com",
     "firstName": "Una",
-    "id": 7,
+    "id": 14,
     "lastName": "Merkel",
     "password": "changeme",
-    "username": "unamerkel2"
+    "username": "unamerkel"
 }
 
 [bravo@localhost tmp]$
-[bravo@localhost tmp]$ http localhost:8080/profile/unamerkel2   ### fetch user profile (as JSON)
+[bravo@localhost tmp]$ http localhost:8080/profile/unamerkel   ### fetch user profile (as JSON)
 HTTP/1.1 200
 Connection: keep-alive
 Content-Type: application/json
-Date: Sat, 28 Nov 2020 18:56:35 GMT
+Date: Sat, 28 Nov 2020 19:15:48 GMT
 Keep-Alive: timeout=60
 Transfer-Encoding: chunked
 
 {
     "email": "unamerkel@example.com",
     "firstName": "Una",
-    "id": 7,
+    "id": 14,
     "lastName": "Merkel",
     "password": "changeme",
-    "username": "unamerkel2"
+    "username": "unamerkel"
 }
 
 [bravo@localhost tmp]$
@@ -39,7 +40,7 @@ Transfer-Encoding: chunked
 HTTP/1.1 404
 Connection: keep-alive
 Content-Type: application/json
-Date: Sat, 28 Nov 2020 18:56:35 GMT
+Date: Sat, 28 Nov 2020 19:15:50 GMT
 Keep-Alive: timeout=60
 Transfer-Encoding: chunked
 
@@ -48,22 +49,24 @@ Transfer-Encoding: chunked
     "message": "Profile Not Found",
     "path": "/profile/russcolombo",
     "status": 404,
-    "timestamp": "2020-11-28T18:56:36.415+0000"
+    "timestamp": "2020-11-28T19:15:50.090+0000"
 }
 
 [bravo@localhost tmp]$
-[bravo@localhost tmp]$ http PUT localhost:8080/profile/unamerkel id=6 username=unamerkel2 password=newpass \
+[bravo@localhost tmp]$ http PUT localhost:8080/profile/unamerkel username=unamerkel password=newpass \
 >     firstName=Una lastName=Merkel email=unamerkel@example.com   ### update profile
-HTTP/1.1 500
-Connection: close
+HTTP/1.1 200
+Connection: keep-alive
 Content-Type: application/json
-Date: Sat, 28 Nov 2020 18:56:36 GMT
+Date: Sat, 28 Nov 2020 19:15:50 GMT
+Keep-Alive: timeout=60
 Transfer-Encoding: chunked
 
 {
-    "error": "Internal Server Error",
-    "message": "Cannot change username for Profile",
-    "path": "/profile/unamerkel",
-    "status": 500,
-    "timestamp": "2020-11-28T18:56:36.800+0000"
+    "email": "unamerkel@example.com",
+    "firstName": "Una",
+    "id": 14,
+    "lastName": "Merkel",
+    "password": "newpass",
+    "username": "unamerkel"
 }

@@ -47,9 +47,14 @@ public class ProfileService {
             dbProfile.setLastName(profile.getLastName());
             dirty = true;
         }
-        if (dirty) {
-            return profileRepository.save(profile);
+        if (!StringUtils.isEmpty(profile.getPassword())
+                && !profile.getPassword().equals(dbProfile.getPassword())) {
+            dbProfile.setPassword(profile.getPassword());
+            dirty = true;
         }
-        return dbProfile;
+        if (dirty) {
+            return profileRepository.save(dbProfile);
+        }
+        return profile;
     }
 }
