@@ -29,12 +29,6 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @RequestMapping(value = "/register", method = GET)
-    public String showRegistrationForm(Model model) {
-        model.addAttribute(new Profile());
-        return "registerForm";
-    }
-
     @PostMapping
     public Profile saveProfile(
             @Valid @RequestBody Profile profile) {
