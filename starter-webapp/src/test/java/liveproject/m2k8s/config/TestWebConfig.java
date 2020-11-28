@@ -1,6 +1,6 @@
 package liveproject.m2k8s.config;
 
-import liveproject.m2k8s.Profile;
+import liveproject.m2k8s.domain.Profile;
 import liveproject.m2k8s.service.ProfileService;
 import liveproject.m2k8s.web.ProfileController;
 import org.mockito.Mockito;

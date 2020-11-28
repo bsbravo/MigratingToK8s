@@ -1,4 +1,4 @@
-package liveproject.m2k8s;
+package liveproject.m2k8s.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

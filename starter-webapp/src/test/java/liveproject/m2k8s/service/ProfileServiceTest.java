@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import liveproject.m2k8s.Profile;
+import liveproject.m2k8s.domain.Profile;
 import liveproject.m2k8s.data.ProfileRepository;
 
 @RunWith(MockitoJUnitRunner.class)
