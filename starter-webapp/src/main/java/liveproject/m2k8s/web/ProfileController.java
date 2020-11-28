@@ -10,27 +10,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/profile")
 public class ProfileController {
 
     private ProfileService profileService;
-
-    @Value("${images.directory:/tmp}")
-    private String uploadFolder;
-
-    @Value("classpath:ghost.jpg")
-    private Resource defaultImage;
 
     @Autowired
     public ProfileController(ProfileService profileService) {
@@ -43,37 +35,27 @@ public class ProfileController {
         return "registerForm";
     }
 
-    @RequestMapping(value = "/register", method = POST)
-    @Transactional
-    public String processRegistration(
-            @Valid Profile profile,
-            Errors errors) {
-        if (errors.hasErrors()) {
-            return "registerForm";
-        }
+    @PostMapping
+    public Profile saveProfile(
+            @RequestBody Profile profile) {
 
-        profileService.save(profile);
-        return "redirect:/profile/" + profile.getUsername();
+        return profileService.save(profile);
     }
 
-    @RequestMapping(value = "/{username}", method = GET)
-    public String showProfile(@PathVariable String username, Model model) {
+    @GetMapping(value = "/{username}")
+    public Profile profile(@PathVariable String username) {
         log.debug("Reading model for: "+username);
-        Profile profile = profileService.getProfile(username);
-        model.addAttribute(profile);
-        return "profile";
+        return profileService.getProfile(username);
     }
 
-    @RequestMapping(value = "/{username}", method = POST)
+    @PutMapping(value = "/{username}")
     @Transactional
-    public String updateProfile(@PathVariable String username, @ModelAttribute Profile profile, Model model) {
+    public Profile updateProfile(@PathVariable String username, @RequestBody Profile profile) {
         if (!username.equals(profile.getUsername())) {
             throw new RuntimeException("Cannot change username for Profile");
         }
         log.debug("Updating model for: "+username);
-        profileService.update(profile);
-        model.addAttribute(profile);
-        return "profile";
+        return profileService.update(profile);
     }
 
 }

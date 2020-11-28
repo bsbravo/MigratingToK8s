@@ -3,10 +3,14 @@ package liveproject.m2k8s.service;
 import liveproject.m2k8s.domain.Profile;
 import liveproject.m2k8s.data.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Transactional
 public class ProfileService {
     private ProfileRepository profileRepository;
 
@@ -16,15 +20,17 @@ public class ProfileService {
     }
 
     public Profile getProfile(String username) {
-        return profileRepository.findByUsername(username);
+        return profileRepository.findByUsername(username).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile Not Found"));
     }
 
-    public void save(Profile profile) {
-        profileRepository.save(profile);
+    public Profile save(Profile profile) {
+        return profileRepository.save(profile);
     }
 
-    public void update(Profile profile) {
-        Profile dbProfile = profileRepository.findByUsername(profile.getUsername());
+    public Profile update(Profile profile) {
+        Profile dbProfile = profileRepository.findByUsername(profile.getUsername()).orElseThrow(()
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile Not Found"));
         boolean dirty = false;
         if (!StringUtils.isEmpty(profile.getEmail())
                 && !profile.getEmail().equals(dbProfile.getEmail())) {
@@ -42,7 +48,8 @@ public class ProfileService {
             dirty = true;
         }
         if (dirty) {
-            profileRepository.save(profile);
+            return profileRepository.save(profile);
         }
+        return dbProfile;
     }
 }

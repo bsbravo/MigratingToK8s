@@ -1,5 +1,6 @@
 package liveproject.m2k8s.web;
 
+import liveproject.m2k8s.domain.Profile;
 import org.junit.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,7 +40,7 @@ public class ProfileControllerTest {
             .andExpect(forwardedUrl("/WEB-INF/views/profile.html"))
             .andExpect(model().attribute("profile", hasProperty("id", is(1L))));
 
-    verify(controller, times(1)).showProfile(anyString(), any(Model.class));
+    verify(controller, times(1)).profile(any());
     verifyNoMoreInteractions(controller);
   }
 }

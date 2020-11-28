@@ -12,6 +12,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import liveproject.m2k8s.domain.Profile;
 import liveproject.m2k8s.data.ProfileRepository;
 
+import java.util.Optional;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ProfileServiceTest {
     private ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
@@ -28,7 +30,7 @@ public class ProfileServiceTest {
                 .username("zasupitts")
                 .password("changeme")
                 .build();
-        when(profileRepository.findByUsername("zasupitts")).thenReturn(zasu);
+        when(profileRepository.findByUsername("zasupitts")).thenReturn(Optional.of(zasu));
     }
 
     @Test
