@@ -43,7 +43,6 @@ public class ProfileController {
     }
 
     @PutMapping(value = "/{username}")
-    @Transactional
     public Profile updateProfile(@PathVariable String username, @Valid @RequestBody Profile profile) {
         if (!username.equals(profile.getUsername())) {
             throw new RuntimeException("Cannot change username for Profile");
